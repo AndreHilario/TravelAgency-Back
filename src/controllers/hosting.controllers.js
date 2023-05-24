@@ -25,3 +25,17 @@ export async function getHotelsById(req, res) {
         res.status(500).send(err.message);
     }
 }
+
+export async function getHotelsByPrice(req, res) {
+
+    const { cityName, minPrice, maxPrice } = req.params;
+
+    try {
+
+        const hotelsByPrice = await getHotelsMinAndMaxPrice(cityName, minPrice, maxPrice);
+
+        res.status(200).send(hotelsByPrice.rows);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
