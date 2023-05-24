@@ -6,8 +6,15 @@ export async function getFlightsByCityName(req, res) {
 
     try {
         const flights = await getFlights(name);
-        
-        res.status(200).send(flights.rows);
+
+        const corretctFlight = flights.rows.map((row) => ({
+            id: row.id,
+            flight_date: row.flight_date,
+            flight_time: row.flight_time,
+            departure_city: row.departure_city,
+            price: row.price
+        }));
+        res.status(200).send(corretctFlight);
     } catch (err) {
         res.status(500).send(err.message);
     }
