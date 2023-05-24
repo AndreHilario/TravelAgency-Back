@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { getHotels } from "../controllers/hosting.controllers.js";
+import { getHotels, getHotelsById } from "../controllers/hosting.controllers.js";
 
 const hostingRouter = Router();
 
-hostingRouter.get("/hosting/:cityName", getHotels);
+hostingRouter.get("/hosting/city/:cityName", getHotels);
+hostingRouter.get("/hosting/:id", getHotelsById);
 
 export default hostingRouter;

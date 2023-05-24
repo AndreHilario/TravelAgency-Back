@@ -14,3 +14,21 @@ export function getHotelsByCityName(cityName) {
     );
     return result;
 }
+
+export function getHotelDetails(id) {
+
+    const result = db.query(
+        `
+        SELECT h.*, 
+        (SELECT array_agg(i.image_url) FROM images AS i 
+            WHERE i.hotel_id = h.id) AS hotel_images,
+        (SELECT array_agg(a.amenity_name) FROM hotel_amenities AS ha 
+            LEFT JOIN amenities AS a 
+                ON ha.amenity_id = a.id WHERE ha.hotel_id = h.id) AS amenities_hotel
+        FROM hotels AS h
+        WHERE h.id = $1;
+        `,
+        [id]
+    );
+    return result;
+}
