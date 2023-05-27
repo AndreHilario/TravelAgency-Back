@@ -1,4 +1,4 @@
-import {  getMinAndMaxPrice, getFlightDetails, getFlights } from "../repositories/flights.repository.js";
+import { getMinAndMaxPrice, getFlightDetails, getFlights, salveChoosedFlight } from "../repositories/flights.repository.js";
 
 export async function getFlightsByCityName(req, res) {
 
@@ -9,7 +9,7 @@ export async function getFlightsByCityName(req, res) {
 
         const corretctFlight = flights.rows.map((row) => ({
             id: row.id,
-            flight_date: row.flight_date,
+            flight_date: row.flight_date.toISOString().split('T')[0],
             flight_time: row.flight_time,
             departure_city: row.departure_city,
             price: row.price
@@ -43,15 +43,27 @@ export async function getFlightByPrices(req, res) {
 
         const corretctFlightPrice = flightPrices.rows.map((row) => ({
             id: row.id,
-            flight_date: row.flight_date,
+            flight_date: row.flight_date.toISOString().split('T')[0],
             flight_time: row.flight_time,
             departure_city: row.departure_city,
             price: row.price
         }));
-        
+
         res.status(200).send(corretctFlightPrice);
     } catch (err) {
         res.status(500).send(err.message);
     }
 
+}
+
+export async function salveFlight(req, res) {
+
+    try {
+
+        await salveChoosedFlight(req.body);
+        res.sendStatus(204);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 }
