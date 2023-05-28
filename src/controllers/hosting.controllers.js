@@ -1,4 +1,4 @@
-import { getHotelDetails, getHotelsByCityName } from "../repositories/hosting.repository.js";
+import { getHotelDetails, getHotelsByCityName, salveChoosedHotel } from "../repositories/hosting.repository.js";
 
 export async function getHotels(req, res) {
 
@@ -35,6 +35,18 @@ export async function getHotelsByPrice(req, res) {
         const hotelsByPrice = await getHotelsMinAndMaxPrice(cityName, minPrice, maxPrice);
 
         res.status(200).send(hotelsByPrice.rows);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+export async function salveHotel(req, res) {
+
+    try {
+
+        await salveChoosedHotel(req.body);
+        res.sendStatus(204);
+
     } catch (err) {
         res.status(500).send(err.message);
     }
