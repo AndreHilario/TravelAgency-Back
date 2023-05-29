@@ -4,7 +4,7 @@ export function getFlights(name) {
     const result = db.query(
         `
         SELECT * FROM flights
-        WHERE departure_city = $1;
+        WHERE destination = $1;
         `,
         [name]
     );
@@ -28,7 +28,7 @@ export function getMinAndMaxPrice(cityName, minPrice, maxPrice) {
     const result = db.query(
         `
         SELECT * FROM flights
-        WHERE departure_city = $1 AND price >= $2 AND price <= $3
+        WHERE destination = $1 AND price >= $2 AND price <= $3
         ORDER BY price; 
         `,
         [cityName, minPrice, maxPrice]
