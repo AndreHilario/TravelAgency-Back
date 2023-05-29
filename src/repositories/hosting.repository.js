@@ -54,13 +54,13 @@ export function getHotelsMinAndMaxPrice(cityName, minPrice, maxPrice) {
 
 export function salveChoosedHotel(body) {
 
-    const { hotel_name, daily_price, description, located_city, hotel_images, amenities_hotel } = body;
+    const { hotel_name, daily_price, description, img_id, located_city, hotel_images, amenities_hotel } = body;
 
     const result = db.query(
         `
-        INSERT INTO salve_hotels (hotel_name, daily_price, description, located_city, hotel_images, amenities_hotel)
-            VALUES ($1, $2, $3, $4, $5, $6);
-        `, [hotel_name, daily_price, description, located_city, hotel_images, amenities_hotel]
+        INSERT INTO salve_hotels (hotel_name, daily_price, description, img_id, located_city, hotel_images, amenities_hotel)
+            VALUES ($1, $2, $3, $4, $5, $6, $7);
+        `, [hotel_name, daily_price, description, img_id, located_city, hotel_images, amenities_hotel]
     );
 
     return result;
